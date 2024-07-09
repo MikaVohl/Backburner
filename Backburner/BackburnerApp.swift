@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct BackburnerApp: App {
+    
     var body: some Scene {
         WindowGroup {
             MainView()
+                .preferredColorScheme(.light)
         }
     }
 }

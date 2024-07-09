@@ -18,6 +18,7 @@ struct Recipe: Codable, Hashable {
     var instructions_list: [String]
     var yields: String
     var url: String
+    var local_image: String?
 //    let json: String
 //    let links: [String]
 //    let nutrients: [String: String]

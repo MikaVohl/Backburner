@@ -21,7 +21,7 @@ struct SavedRecipesBrowserView: View {
             // Use LazyVGrid with the columns defined
             LazyVGrid(columns: columns) {
                 ForEach(savedRecipes.indices, id: \.self) { index in
-                    var recipe = savedRecipes[index]
+                    let recipe = savedRecipes[index]
                     ZStack(alignment: .topTrailing) {
                         NavigationLink(destination: RecipeDetailView(recipe: recipe)) {
                             VStack {
@@ -41,14 +41,13 @@ struct SavedRecipesBrowserView: View {
                                     .font(.headline)
                                     .lineLimit(2)
                                     .frame(width: 160, height: 50, alignment: .top)
-                            }.foregroundColor(.black)
-                                .overlay(
-                                    DeleteButton(recipe: savedRecipes[index], recipes: $savedRecipes, onSave: saveRecipes)
-                                        .offset(x: 8, y: -8) // Adjust these values as needed
-                                    , alignment: .topTrailing
-                                )
-            
                             }
+                            .foregroundColor(.black)
+                            }.overlay(
+                                DeleteButton(recipe: savedRecipes[index], recipes: $savedRecipes, onSave: saveRecipes)
+                                    .offset(x: 8, y: -8) // Adjust these values as needed
+                                , alignment: .topTrailing
+                            )
                         }
                     }
                 }
@@ -115,6 +114,7 @@ struct DeleteButton: View {
                     .foregroundColor(.red)
             }
         }
+            
     }
     
     func deleteRecipe(at index: Int) {

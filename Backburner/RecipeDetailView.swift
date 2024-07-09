@@ -58,13 +58,13 @@ struct RecipeDetailView: View {
                     ForEach(group.ingredients, id: \.self) { ingredient in
                         Text("• \(ingredient)")
                             .strikethrough(self.selectedIngredients.contains(ingredient), color: .black)
-                                .onTapGesture {
-                                    if self.selectedIngredients.contains(ingredient) {
-                                        self.selectedIngredients.remove(ingredient)
-                                    } else {
-                                        self.selectedIngredients.insert(ingredient)
-                                    }
+                            .onTapGesture {
+                                if self.selectedIngredients.contains(ingredient) {
+                                    self.selectedIngredients.remove(ingredient)
+                                } else {
+                                    self.selectedIngredients.insert(ingredient)
                                 }
+                            }
                     }
                 }
 
