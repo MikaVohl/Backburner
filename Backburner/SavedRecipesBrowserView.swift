@@ -22,25 +22,47 @@ struct SavedRecipesBrowserView: View {
             LazyVGrid(columns: columns) {
                 ForEach(savedRecipes.indices, id: \.self) { index in
                     let recipe = savedRecipes[index]
+                    let imageURLString = recipe.local_image
+                    
                     ZStack(alignment: .topTrailing) {
                         NavigationLink(destination: RecipeDetailView(recipe: recipe)) {
                             VStack {
-                                if let url = URL(string: recipe.image) {
-                                    AsyncImage(url: url) { image in
-                                        image.resizable()
-                                    } placeholder: {
-                                        ProgressView()
+                                if let imageURLString = imageURLString {
+                                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                                    let imageURL = documentsDirectory.appendingPathComponent("images/"+imageURLString)
+                                    
+                                    if FileManager.default.fileExists(atPath: imageURL.path) {
+                                        if let uiImage = UIImage(contentsOfFile: imageURL.path) {
+                                            Image(uiImage: uiImage)
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                                .frame(width: 160, height: 160)
+                                                .clipped()
+                                                .cornerRadius(10)
+                                                .shadow(radius: 2)
+                                        } else {
+                                            Text("Image not found")
+                                        }
+                                    } else {
+                                        Text("Image not found2")
                                     }
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 160, height: 160)
-                                    .clipped()
-                                    .cornerRadius(10)
-                                    .shadow(radius: 2)
+                                } else {
+                                    Text("No image URL")
                                 }
+                                
                                 Text(recipe.title)
                                     .font(.headline)
                                     .lineLimit(2)
                                     .frame(width: 160, height: 50, alignment: .top)
+                            }
+                            .onAppear {
+                                if let imageURLString = imageURLString {
+                                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                                    let imageURL = documentsDirectory.appendingPathComponent(imageURLString)
+                                    print("Documents Directory: \(documentsDirectory.path)")
+                                    print("Image URL: \(imageURL.path)")
+                                    print("File exists at path: \(FileManager.default.fileExists(atPath: imageURL.path))")
+                                }
                             }
                             .foregroundColor(.black)
                             }.overlay(

@@ -13,7 +13,6 @@ struct RecipeFetcherView: View {
     @State private var errorMessage: String?
     @State private var successMessage: String?
     @State private var recipe: Recipe?
-//    @State private var showingNamingDialog: Bool = false
     @State private var recipeName: String = ""
     @State private var showingAlert: Bool = false
     @State private var alertText: String = ""
@@ -64,18 +63,6 @@ struct RecipeFetcherView: View {
                 }
             }
             .padding()
-//            .alert(isPresented: $showingAlert) {
-//                Alert(
-//                    title: Text("Rename Recipe"),
-//                    message: TextField("Recipe name already exists. Please enter a new name:", text: $recipeName),
-//                    primaryButton: .default(Text("Save"), action: {
-//                        // Save action
-//                        self.recipe?.title = self.alertText
-//                        checkAndSaveRecipe()
-//                    }),
-//                    secondaryButton: .cancel()
-//                )
-//            }
             .alert("Rename Recipe", isPresented: $showingAlert) {
                 TextField("Recipe name already exists. Please enter a new name:", text: $recipeName)
                 Button("Save", action: {
@@ -85,19 +72,12 @@ struct RecipeFetcherView: View {
                 Button("Cancel", action: {
                     showingAlert = false
                 })
-            }//            .sheet(isPresented: $showingNamingDialog) {
-//                NamingDialog(recipeName: $recipeName) {
-//                    // Update the recipe title with the new name
-//                    self.recipe?.title = self.recipeName
-//                    // Attempt to save again
-//                    checkAndSaveRecipe()
-//                }
-//            }
+            }
         }
     }
     
     func fetchRecipe() {
-        guard let endpointUrl = URL(string: "http://10.0.0.182:5000/scrape") else {
+        guard let endpointUrl = URL(string: "http://10.0.0.51:5000/scrape") else {
             errorMessage = "Invalid URL"
             isLoading = false
             return
@@ -135,56 +115,156 @@ struct RecipeFetcherView: View {
     }
     
     func checkAndSaveRecipe() {
-        guard let newRecipe = self.recipe else { return }
+        guard var newRecipe = self.recipe else { return }
         
-        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let fileURL = documentDirectory.appendingPathComponent("recipes.json")
-        
-        var recipes: [Recipe] = []
-        
-        if let data = try? Data(contentsOf: fileURL),
-           let decodedRecipes = try? JSONDecoder().decode([Recipe].self, from: data) {
-            recipes = decodedRecipes
-        }
-        repeat {
-            if recipes.contains(where: { $0.title == newRecipe.title }) {
-                var count = 1
-                var uniqueTitle = "\(newRecipe.title) (\(count))"
-                while recipes.contains(where: { $0.title == uniqueTitle }) {
-                    count += 1 // Increment count if the title is not unique
-                    uniqueTitle = "\(newRecipe.title) (\(count))" // Update uniqueTitle with the new count
+        let imageURLString = newRecipe.image
+        if let imageURL = URL(string: imageURLString) {
+            downloadImage(url: imageURL) { result in
+                switch result {
+                case .success(let fileName):
+                    print("Image saved as ", fileName)
+                    newRecipe.local_image = fileName
+                case .failure(let error):
+                    print("Failed to download image:", error)
                 }
-                self.recipeName = uniqueTitle
-//                self.showingNamingDialog = true
-                presentRenameAlert()
-            } else {
-                // If no conflict, save the recipe
-                recipes.append(newRecipe)
-                if let encodedData = try? JSONEncoder().encode(recipes) {
-                    try? encodedData.write(to: fileURL)
+                let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                let fileURL = documentDirectory.appendingPathComponent("recipes.json")
+                
+                var recipes: [Recipe] = []
+                
+                if let data = try? Data(contentsOf: fileURL),
+                   let decodedRecipes = try? JSONDecoder().decode([Recipe].self, from: data) {
+                    recipes = decodedRecipes
                 }
-                self.successMessage = "Successfully saved recipe"
-                self.errorMessage = ""
-//                self.showingNamingDialog = false
+                repeat {
+                    if recipes.contains(where: { $0.title == newRecipe.title }) {
+                        var count = 1
+                        var uniqueTitle = "\(newRecipe.title) (\(count))"
+                        while recipes.contains(where: { $0.title == uniqueTitle }) {
+                            count += 1 // Increment count if the title is not unique
+                            uniqueTitle = "\(newRecipe.title) (\(count))" // Update uniqueTitle with the new count
+                        }
+                        self.recipeName = uniqueTitle
+                        presentRenameAlert()
+                    } else {
+                        // If no conflict, save the recipe
+                        recipes.append(newRecipe)
+                        if let encodedData = try? JSONEncoder().encode(recipes) {
+                            try? encodedData.write(to: fileURL)
+                        }
+                        self.successMessage = "Successfully saved recipe"
+                        self.errorMessage = ""
+                    }
+                } while recipes.contains(where: { $0.title == self.recipeName })
             }
-        } while recipes.contains(where: { $0.title == self.recipeName })
+        }
     }
-//    
-//    struct NamingDialog: View {
-//        @Binding var recipeName: String
-//        var onSave: () -> Void
-//        
-//        var body: some View {
-//            VStack {
-//                Text("Recipe name already exists. Please enter a new name:")
-//                TextField("New Recipe Name", text: $recipeName)
-//                    .textFieldStyle(RoundedBorderTextFieldStyle())
-//                Button("Save") {
-//                    onSave()
-//                }
-//                .padding()
+    
+//    func downloadImage(from url: URL, completion: @escaping (URL?) -> Void) {
+//        let task = URLSession.shared.downloadTask(with: url) { location, response, error in
+//            guard let location = location, error == nil else {
+//                completion(nil)
+//                return
 //            }
-//            .padding()
+//
+//            let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//            let fileName = url.lastPathComponent
+//            let destinationURL = documentDirectory.appendingPathComponent(fileName)
+//
+//            do {
+//                try FileManager.default.moveItem(at: location, to: destinationURL)
+//                completion(destinationURL)
+//            } catch {
+//                completion(nil)
+//            }
 //        }
+//        task.resume()
+//}
+        
+//    func downloadImage(url: URL) {
+//        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//        URLSession.shared.downloadTask(with: url) { location, response, error in
+//            guard let location = location else {
+//                print("download error:", error ?? "")
+//                return
+//            }
+//            // move the downloaded file from the temporary location url to your app documents directory
+//            do {
+//                try FileManager.default.moveItem(at: location, to: documents.appendingPathComponent(response?.suggestedFilename ?? url.lastPathComponent))
+//            } catch {
+//                print(error)
+//            }
+//        }.resume()
 //    }
+        
+    func downloadImage(url: URL, completion: @escaping (Result<String, Error>) -> Void) {
+        let fileManager = FileManager.default
+//        let appSupportDirectory = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+//        let imagesDirectory = appSupportDirectory.appendingPathComponent("images")
+//        let documentsDirectory = filemanager.urls(
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let imagesDirectory = documentsDirectory.appendingPathComponent("images")
+
+        // Create the images directory if it doesn't exist
+        if !fileManager.fileExists(atPath: imagesDirectory.path) {
+            do {
+                try fileManager.createDirectory(at: imagesDirectory, withIntermediateDirectories: true, attributes: nil)
+            } catch {
+                completion(.failure(error))
+                return
+            }
+        }
+
+        URLSession.shared.downloadTask(with: url) { location, response, error in
+            guard let location = location else {
+                completion(.failure(error ?? NSError(domain: "DownloadError", code: 0, userInfo: nil)))
+                return
+            }
+
+            var filename = response?.suggestedFilename ?? url.lastPathComponent
+            var destinationURL = imagesDirectory.appendingPathComponent(filename)
+
+            // Generate a unique filename if it already exists
+            var fileIndex = 1
+            while fileManager.fileExists(atPath: destinationURL.path) {
+                let fileExtension = (filename as NSString).pathExtension
+                let fileNameWithoutExtension = (filename as NSString).deletingPathExtension
+                filename = "\(fileNameWithoutExtension)_\(fileIndex).\(fileExtension)"
+                destinationURL = imagesDirectory.appendingPathComponent(filename)
+                fileIndex += 1
+            }
+
+            // Move the downloaded file to the images directory
+            do {
+                try fileManager.moveItem(at: location, to: destinationURL)
+                print("File moved to:", destinationURL.path)
+                completion(.success(filename))
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
+    }
+
+
+        
+        
+        
+//        extension URL {
+//            func loadImage(_ image: inout UIImage?) {
+//                if let data = try? Data(contentsOf: self), let loaded = UIImage(data: data) {
+//                    image = loaded
+//                } else {
+//                    image = nil
+//                }
+//            }
+//            func saveImage(_ image: UIImage?) {
+//                if let image = image {
+//                    if let data = image.jpegData(compressionQuality: 1.0) {
+//                        try? data.write(to: self)
+//                    }
+//                } else {
+//                    try? FileManager.default.removeItem(at: self)
+//                }
+//            }
+//        }
 }
