@@ -8,44 +8,38 @@
 import Foundation
 
 struct Recipe: Codable, Hashable {
+    var id: Int?
     var host: String
+    var canonical_url: String?
     var title: String
+    var category: String?
     var total_time: Int
+    var cook_time: Int?
+    var prep_time: Int?
+    var cooking_method: String?
+    var yields: String
     var image: String
+    var nutrients: [String: String]?
+    var keywords: [String]?
+    var language: String?
     var ingredients: [String]
     var ingredient_groups: [IngredientGroup]
     var instructions: String
     var instructions_list: [String]
-    var yields: String
-    var url: String
+    var ratings: Double?
+    var ratings_count: Int?
+    var author: String?
+    var cuisine: String?
+    var description: String?
+    var reviews: [String]?
+    var equipment: [String]?
+    var dietary_restrictions: [String]?
+    var site_name: String?
     var local_image: String?
-//    let json: String
-//    let links: [String]
-//    let nutrients: [String: String]
-//    let canonical_url: String
-//    let equipment: [String]
-//    let cooking_method: String
-//    let keywords: [String]
-//    let dietary_restrictions: [String]
+    var tags: [String]?
 }
 
 struct IngredientGroup: Codable, Hashable {
     var ingredients: [String]
     var purpose: String?
 }
-
-//struct Link: Codable {
-//    let `class`: [String]
-//    let href: String
-//    let title: String?
-//    let dataTestid: String?
-//    let style: String?
-//
-//    private enum CodingKeys: String, CodingKey {
-//        case `class`
-//        case href
-//        case title
-//        case dataTestid = "data-testid"
-//        case style
-//    }
-//}

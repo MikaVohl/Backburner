@@ -19,7 +19,7 @@ struct RecipeDetailView: View {
                     .font(.largeTitle)
                     .padding(.bottom)
                 
-                if let origin_link = URL(string: recipe.url){
+                if let url = recipe.canonical_url, let origin_link = URL(string: url){
                     Link("Source Link from \(recipe.host)", destination: origin_link)
                 }
                 

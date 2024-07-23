@@ -55,15 +55,6 @@ struct SavedRecipesBrowserView: View {
                                     .lineLimit(2)
                                     .frame(width: 160, height: 50, alignment: .top)
                             }
-                            .onAppear {
-                                if let imageURLString = imageURLString {
-                                    let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                                    let imageURL = documentsDirectory.appendingPathComponent(imageURLString)
-                                    print("Documents Directory: \(documentsDirectory.path)")
-                                    print("Image URL: \(imageURL.path)")
-                                    print("File exists at path: \(FileManager.default.fileExists(atPath: imageURL.path))")
-                                }
-                            }
                             .foregroundColor(.black)
                             }.overlay(
                                 DeleteButton(recipe: savedRecipes[index], recipes: $savedRecipes, onSave: saveRecipes)
@@ -88,7 +79,6 @@ struct SavedRecipesBrowserView: View {
         let fileManager = FileManager.default
         let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let recipesFileURL = documentsDirectory.appendingPathComponent("recipes.json")
-
         do {
             let data = try Data(contentsOf: recipesFileURL)
             let decoder = JSONDecoder()
