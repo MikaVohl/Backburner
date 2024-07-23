@@ -11,7 +11,6 @@
 		F17B6F682C334DAA002D0A71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F17B6F672C334DAA002D0A71 /* Assets.xcassets */; };
 		F17B6F6C2C334DAA002D0A71 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F17B6F6B2C334DAA002D0A71 /* Preview Assets.xcassets */; };
 		F17B6F752C334F47002D0A71 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17B6F742C334F47002D0A71 /* Recipe.swift */; };
-		F17B6F772C334F61002D0A71 /* RecipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F17B6F762C334F61002D0A71 /* RecipeView.swift */; };
 		F1A0348D2C34BC5D00F9140F /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0348C2C34BC5D00F9140F /* MainView.swift */; };
 		F1A0348F2C34BC9D00F9140F /* RecipeFetcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0348E2C34BC9D00F9140F /* RecipeFetcherView.swift */; };
 		F1A034912C34BD0C00F9140F /* SavedRecipesBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A034902C34BD0C00F9140F /* SavedRecipesBrowserView.swift */; };
@@ -25,7 +24,6 @@
 		F17B6F692C334DAA002D0A71 /* Backburner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Backburner.entitlements; sourceTree = "<group>"; };
 		F17B6F6B2C334DAA002D0A71 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F17B6F742C334F47002D0A71 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
-		F17B6F762C334F61002D0A71 /* RecipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeView.swift; sourceTree = "<group>"; };
 		F1A0348C2C34BC5D00F9140F /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F1A0348E2C34BC9D00F9140F /* RecipeFetcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFetcherView.swift; sourceTree = "<group>"; };
 		F1A034902C34BD0C00F9140F /* SavedRecipesBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRecipesBrowserView.swift; sourceTree = "<group>"; };
@@ -68,7 +66,6 @@
 				F1A0348E2C34BC9D00F9140F /* RecipeFetcherView.swift */,
 				F1A034902C34BD0C00F9140F /* SavedRecipesBrowserView.swift */,
 				F17B6F742C334F47002D0A71 /* Recipe.swift */,
-				F17B6F762C334F61002D0A71 /* RecipeView.swift */,
 				F17B6F672C334DAA002D0A71 /* Assets.xcassets */,
 				F17B6F692C334DAA002D0A71 /* Backburner.entitlements */,
 				F17B6F6A2C334DAA002D0A71 /* Preview Content */,
@@ -157,7 +154,6 @@
 				F1A034932C34BD3900F9140F /* RecipeDetailView.swift in Sources */,
 				F17B6F752C334F47002D0A71 /* Recipe.swift in Sources */,
 				F1A0348D2C34BC5D00F9140F /* MainView.swift in Sources */,
-				F17B6F772C334F61002D0A71 /* RecipeView.swift in Sources */,
 				F1A0348F2C34BC9D00F9140F /* RecipeFetcherView.swift in Sources */,
 				F17B6F642C334DA8002D0A71 /* BackburnerApp.swift in Sources */,
 				F1A034912C34BD0C00F9140F /* SavedRecipesBrowserView.swift in Sources */,

@@ -55,7 +55,7 @@ struct SavedRecipesBrowserView: View {
                                     .lineLimit(2)
                                     .frame(width: 160, height: 50, alignment: .top)
                             }
-                            .foregroundColor(.black)
+                            .foregroundStyle(.black)
                             }.overlay(
                                 DeleteButton(recipe: savedRecipes[index], recipes: $savedRecipes, onSave: saveRecipes)
                                     .offset(x: 8, y: -8) // Adjust these values as needed
@@ -89,8 +89,6 @@ struct SavedRecipesBrowserView: View {
     }
 
     func saveRecipes() {
-        print("saving recipes")
-        print(savedRecipes)
         let fileManager = FileManager.default
         let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let recipesFileURL = documentsDirectory.appendingPathComponent("recipes.json")
@@ -123,7 +121,7 @@ struct DeleteButton: View {
                 onSave()
             }) {
                 Image(systemName: "minus.circle.fill")
-                    .foregroundColor(.red)
+                    .foregroundStyle(.red)
             }
         }
             

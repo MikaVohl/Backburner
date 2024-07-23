@@ -9,6 +9,10 @@ import Foundation
 
 struct Recipe: Codable, Hashable {
     var id: Int?
+    var tags: [String]?
+    var local_image: String?
+    
+    // From scraper
     var host: String
     var canonical_url: String?
     var title: String
@@ -35,8 +39,6 @@ struct Recipe: Codable, Hashable {
     var equipment: [String]?
     var dietary_restrictions: [String]?
     var site_name: String?
-    var local_image: String?
-    var tags: [String]?
 }
 
 struct IngredientGroup: Codable, Hashable {
