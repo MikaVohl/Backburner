@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SavedRecipesBrowserView: View {
     @State private var savedRecipes: [Recipe] = []
+    @State var searchText: String = ""
     @Environment(\.editMode) var editMode // Track the edit mode
 
     let columns = [
@@ -17,11 +18,19 @@ struct SavedRecipesBrowserView: View {
     ]
     
     var body: some View {
+        let filteredRecipes = searchText.isEmpty ? savedRecipes : savedRecipes.filter { recipe in
+            recipe.title.lowercased().contains(searchText.lowercased()) ||
+            (recipe.ingredients.contains { ingredient in
+                ingredient.lowercased().range(of: searchText.lowercased()) != nil
+            })
+        }
+    
         ScrollView {
             // Use LazyVGrid with the columns defined
             LazyVGrid(columns: columns) {
-                ForEach(savedRecipes.indices, id: \.self) { index in
-                    let recipe = savedRecipes[index]
+                ForEach(filteredRecipes.indices, id: \.self) { index in
+                    let recipe = filteredRecipes[index]
+                    
                     let imageURLString = recipe.local_image
                     
                     ZStack(alignment: .topTrailing) {
@@ -73,6 +82,7 @@ struct SavedRecipesBrowserView: View {
         .toolbar {
             EditButton()
         }
+        .searchable(text: $searchText)
     }
 
     func loadSavedRecipes() {
