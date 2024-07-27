@@ -82,35 +82,38 @@ struct RecipeDetailView: View {
                     .aspectRatio(contentMode: .fit)
                     .cornerRadius(10)
                 }
-
-                Text("Ingredients")
-                    .font(.title)
-
-                ForEach(recipe.ingredient_groups, id: \.self) { group in
-                    if let purpose = group.purpose {
-                        Text(purpose)
-                            .font(.headline)
-                    }
-                    ForEach(group.ingredients, id: \.self) { ingredient in
-                        Text("• \(ingredient)")
-                            .strikethrough(self.selectedIngredients.contains(ingredient), color: .black)
-                            .onTapGesture {
-                                if self.selectedIngredients.contains(ingredient) {
-                                    self.selectedIngredients.remove(ingredient)
-                                } else {
-                                    self.selectedIngredients.insert(ingredient)
+                
+                if !recipe.ingredient_groups.isEmpty && !recipe.ingredient_groups[0].ingredients.isEmpty {
+                    Text("Ingredients")
+                        .font(.title)
+                    
+                    ForEach(recipe.ingredient_groups, id: \.self) { group in
+                        if let purpose = group.purpose {
+                            Text(purpose)
+                                .font(.headline)
+                        }
+                        ForEach(group.ingredients, id: \.self) { ingredient in
+                            Text("• \(ingredient)")
+                                .strikethrough(self.selectedIngredients.contains(ingredient), color: .black)
+                                .onTapGesture {
+                                    if self.selectedIngredients.contains(ingredient) {
+                                        self.selectedIngredients.remove(ingredient)
+                                    } else {
+                                        self.selectedIngredients.insert(ingredient)
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
-
-                Text("Instructions")
-                    .font(.title)
-                    .padding(.top)
-
-                ForEach(Array(recipe.instructions_list.enumerated()), id: \.element) { index, instruction in
-                    Text("\(index + 1). \(instruction)")
-                        .strikethrough(self.selectedInstructions.contains(index), color: .black)
+                
+                if !recipe.instructions_list.isEmpty {
+                    Text("Instructions")
+                        .font(.title)
+                        .padding(.top)
+                    
+                    ForEach(Array(recipe.instructions_list.enumerated()), id: \.element) { index, instruction in
+                        Text("\(index + 1). \(instruction)")
+                            .strikethrough(self.selectedInstructions.contains(index), color: .black)
                             .onTapGesture {
                                 if self.selectedInstructions.contains(index) {
                                     self.selectedInstructions.remove(index)
@@ -118,6 +121,7 @@ struct RecipeDetailView: View {
                                     self.selectedInstructions.insert(index)
                                 }
                             }
+                    }
                 }
                 if let tags = recipe.tags {
                     Text("Tags:")

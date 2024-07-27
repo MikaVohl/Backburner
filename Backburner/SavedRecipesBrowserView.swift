@@ -22,7 +22,10 @@ struct SavedRecipesBrowserView: View {
             recipe.title.lowercased().contains(searchText.lowercased()) ||
             (recipe.ingredients.contains { ingredient in
                 ingredient.lowercased().range(of: searchText.lowercased()) != nil
-            })
+            }) ||
+            (recipe.tags != nil ? (recipe.tags!.contains { tag in
+                tag.lowercased().range(of: searchText.lowercased()) != nil
+            }) : false)
         }
     
         ScrollView {
@@ -82,7 +85,7 @@ struct SavedRecipesBrowserView: View {
         .toolbar {
             EditButton()
         }
-        .searchable(text: $searchText)
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
     }
 
     func loadSavedRecipes() {
