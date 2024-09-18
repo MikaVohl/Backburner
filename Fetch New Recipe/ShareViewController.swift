@@ -1,94 +1,149 @@
 //
-//  RecipeFetcherView.swift
-//  Backburner
+//  ShareViewController.swift
+//  Fetch New Recipe
 //
-//  Created by Mika Vohl on 2024-07-02.
+//  Created by Mika Vohl on 2024-07-28.
 //
 
-import SwiftUI
+import UIKit
+import Social
 
-struct RecipeFetcherView: View {
-    @State private var url: String = ""
-    @State private var isLoading: Bool = false
-    @State private var errorMessage: String?
-    @State private var successMessage: String?
-    @State private var recipe: Recipe?
+struct Recipe: Codable, Hashable {
+    var id: Int?
+    var tags: [String]?
+    var local_image: String?
     
-    var body: some View {
-        NavigationStack {
-            VStack {
-                Button(action: {
-                    if let clipboard = UIPasteboard.general.string {
-                        url = clipboard
-                    }
-                }) {
-                    Text("Paste Clipboard")
-                }
-                
-                TextField("Enter Recipe URL", text: $url)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Button(action: {
-                    isLoading = true
-                    fetchRecipe()
-                }) {
-                    Text("Fetch Recipe")
-                        .padding()
-                        .foregroundStyle(.white)
-                        .background(Color.blue)
-                        .cornerRadius(8)
-                }
-                .padding()
-                
-                if let errorMessage = errorMessage {
-                    Text(errorMessage)
-                        .foregroundStyle(.red)
-                        .padding()
-                }
-                
-                if let successMessage = successMessage {
-                    Text(successMessage)
-                        .foregroundStyle(.green)
-                        .padding()
-                }
-                
-                if isLoading {
-                    ProgressView("Loading...")
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .padding()
+    // From scraper
+    var host: String
+    var canonical_url: String?
+    var title: String
+    var category: String?
+    var total_time: Int
+    var cook_time: Int?
+    var prep_time: Int?
+    var cooking_method: String?
+    var yields: String
+    var image: String
+    var nutrients: [String: String]?
+    var keywords: [String]?
+    var language: String?
+    var ingredients: [String]
+    var ingredient_groups: [IngredientGroup]
+    var instructions: String
+    var instructions_list: [String]
+    var ratings: Double?
+    var ratings_count: Int?
+    var author: String?
+    var cuisine: String?
+    var description: String?
+    var reviews: [String]?
+    var equipment: [String]?
+    var dietary_restrictions: [String]?
+    var site_name: String?
+}
+
+struct IngredientGroup: Codable, Hashable {
+    var ingredients: [String]
+    var purpose: String?
+}
+
+
+class ShareViewController: SLComposeServiceViewController {
+//    @State private var url: String = ""
+//    @State private var isLoading: Bool = false
+//    @State private var errorMessage: String?
+//    @State private var successMessage: String?
+//    @State private var recipe: Recipe?
+    var real_url: URL?
+    var recipe: Recipe?
+    var isLoading = true
+    var errorMessage = ""
+    var successMessage = ""
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Change the "Post" button to say "Fetch"
+        if let button = navigationController?.navigationBar.topItem?.rightBarButtonItem {
+            button.title = "Fetch"
+        }
+        textView.isUserInteractionEnabled = false
+//        textView.textColor = UIColor(white: 0.5, alpha: 1)
+        textView.tintColor = UIColor.clear // TODO hack to disable cursor
+        getUrl { (url: URL?) in
+            if let url = url {
+                DispatchQueue.main.async {
+                    // TODO this is also hacky
+                    self.textView.text = "\(url)"
+                    self.real_url = url
                 }
             }
-            .padding()
         }
     }
     
+    func getUrl(callback: @escaping ((URL?) -> ())) {
+        if let item = extensionContext?.inputItems.first as? NSExtensionItem,
+            let itemProvider = item.attachments?.first as? NSItemProvider,
+            itemProvider.hasItemConformingToTypeIdentifier("public.url") {
+            itemProvider.loadItem(forTypeIdentifier: "public.url", options: nil) { (url, error) in
+                if let shareURL = url as? URL {
+                    callback(shareURL)
+                }
+            }
+        }
+        callback(nil)
+    }
+
+    override func isContentValid() -> Bool {
+        // Do validation of contentText and/or NSExtensionContext attachments here
+        return true
+    }
+
+    override func didSelectPost() {
+        // This is called after the user selects Post. Do the upload of contentText and/or NSExtensionContext attachments.
+        fetchRecipe()
+        // Inform the host that we're done, so it un-blocks its UI. Note: Alternatively you could call super's -didSelectPost, which will similarly complete the extension context.
+        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+    }
+
+    override func configurationItems() -> [Any]! {
+        // To add configuration options via table cells at the bottom of the sheet, return an array of SLComposeSheetConfigurationItem here.
+        return []
+    }
+    
     func fetchRecipe() {
-        
-        guard let urlWithQuery = URL(string: "https://recipescraperapi.onrender.com/scrape?url=\(String(describing: url))") else {
-            errorMessage = "Invalid query URL"
-            isLoading = false
+        guard let unwrappedUrl = real_url else {
+            self.errorMessage = "Invalid URL"
+            self.isLoading = false
+            return
+        }
+            
+        let queryUrlString = "https://recipescraperapi.onrender.com/scrape?url=\(unwrappedUrl.absoluteString)"
+        guard let urlWithQuery = URL(string: queryUrlString) else {
+            self.errorMessage = "Invalid query URL"
+            self.isLoading = false
             return
         }
 
+        print(urlWithQuery)
         var request = URLRequest(url: urlWithQuery)
         request.httpMethod = "GET"
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             DispatchQueue.main.async {
-                isLoading = false
+                self.isLoading = false
                 guard let data = data else {
-                    errorMessage = error?.localizedDescription ?? "Unknown error"
+                    self.errorMessage = error?.localizedDescription ?? "Unknown error"
                     return
                 }
                 
                 do {
                     let decodedResponse = try JSONDecoder().decode(Recipe.self, from: data)
                     self.recipe = decodedResponse
-                    checkAndSaveRecipe()
+                    self.checkAndSaveRecipe()
                 } catch {
                     print(error)
-                    errorMessage = "Error decoding response: \(error.localizedDescription)"
+                    self.errorMessage = "Error decoding response: \(error.localizedDescription)"
                 }
             }
         }.resume()
@@ -97,8 +152,13 @@ struct RecipeFetcherView: View {
     func checkAndSaveRecipe() {
         guard var newRecipe = self.recipe else { return }
         
-        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileManager = FileManager.default
+        let appGroupID = "com.mikavohl.backburner" // Replace with your App Group ID
+        let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURL = documentDirectory.appendingPathComponent("recipes.json")
+        
+        print("Document directory: \(documentDirectory)")
+        print("Recipes file URL: \(fileURL)")
         
         var recipes: [Recipe] = []
         
@@ -147,6 +207,7 @@ struct RecipeFetcherView: View {
             }
         }
     }
+
         
     func downloadImage(url: URL, filename: String, completion: @escaping (Result<String, Error>) -> Void) {
         let fileManager = FileManager.default

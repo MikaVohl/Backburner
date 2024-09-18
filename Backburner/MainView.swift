@@ -30,8 +30,6 @@ struct MainView: View {
 }
 
 // TODO:
-// - Consider loading saved recipes on app load. Prevents loading times when opening "Saved Recipes"
-// - Consider saving recipe images to iPhone storage
 // - Dynamic ingredient amounts to allow for scaling (double recipe, half recipe, ...)
 // - Modularized ingredients to allow for unit conversions (cups -> grams, liters -> ml, ...)
 // - Accept links from apple's share dialog

@@ -1,10 +1,3 @@
-//
-//  RecipeDetailView.swift
-//  Backburner
-//
-//  Created by Mika Vohl on 2024-07-02.
-//
-
 import SwiftUI
 
 struct RecipeDetailView: View {
@@ -19,9 +12,9 @@ struct RecipeDetailView: View {
                     .font(.largeTitle)
                 
                 HStack {
-                    RatingStarsView(rating: recipe.ratings ?? 0.0).fixedSize(horizontal: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/, vertical: false)
+                    RatingStarsView(rating: recipe.ratings ?? 0.0).fixedSize(horizontal: true, vertical: false)
                     Spacer()
-                    if let url = recipe.canonical_url, let origin_link = URL(string: url){
+                    if let url = recipe.canonical_url, let origin_link = URL(string: url) {
                         if recipe.host.count < 20 {
                             Link(recipe.host, destination: origin_link)
                         } else {
@@ -39,9 +32,9 @@ struct RecipeDetailView: View {
                     Text("Total Time:").bold()
                     if hours > 0 && minutes > 0 {
                         Text("\(hours) hours and \(minutes) minutes")
-                    }else if hours > 0 {
+                    } else if hours > 0 {
                         Text("\(hours) hours")
-                    }else if minutes > 0 {
+                    } else if minutes > 0 {
                         Text("\(minutes) minutes")
                     }
                 }
@@ -194,13 +187,4 @@ struct Tag: View {
         let hash = abs(name.hashValue) % colors.count // Ensure the index is within the bounds of the colors array
         return colors[hash]
     }
-//    func colorFromName(name: String) -> Color {
-//        // Hash the name and use the hash to generate a color
-//        let hash = name.hashValue
-//        let red = Double((hash & 0xFF0000) >> 16) / 255.0
-//        let green = Double((hash & 0x00FF00) >> 8) / 255.0
-//        let blue = Double(hash & 0x0000FF) / 255.0
-//        
-//        return Color(red: red, green: green, blue: blue, opacity: 1.0)
-//    }
 }

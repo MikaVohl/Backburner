@@ -15,7 +15,34 @@
 		F1A0348F2C34BC9D00F9140F /* RecipeFetcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0348E2C34BC9D00F9140F /* RecipeFetcherView.swift */; };
 		F1A034912C34BD0C00F9140F /* SavedRecipesBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A034902C34BD0C00F9140F /* SavedRecipesBrowserView.swift */; };
 		F1A034932C34BD3900F9140F /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A034922C34BD3900F9140F /* RecipeDetailView.swift */; };
+		F1E454282C5695B8004B5451 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1E454272C5695B8004B5451 /* ShareViewController.swift */; };
+		F1E4542B2C5695B8004B5451 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = F1E4542A2C5695B8004B5451 /* Base */; };
+		F1E4542F2C5695B8004B5451 /* Fetch New Recipe.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F1E454252C5695B8004B5451 /* Fetch New Recipe.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F1E4542D2C5695B8004B5451 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F17B6F582C334DA8002D0A71 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1E454242C5695B8004B5451;
+			remoteInfo = "Fetch New Recipe";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F1E454302C5695B8004B5451 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F1E4542F2C5695B8004B5451 /* Fetch New Recipe.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		F17B6F602C334DA8002D0A71 /* Backburner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Backburner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -28,10 +55,21 @@
 		F1A0348E2C34BC9D00F9140F /* RecipeFetcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFetcherView.swift; sourceTree = "<group>"; };
 		F1A034902C34BD0C00F9140F /* SavedRecipesBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRecipesBrowserView.swift; sourceTree = "<group>"; };
 		F1A034922C34BD3900F9140F /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
+		F1E454252C5695B8004B5451 /* Fetch New Recipe.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Fetch New Recipe.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1E454272C5695B8004B5451 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		F1E4542A2C5695B8004B5451 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		F1E4542C2C5695B8004B5451 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		F17B6F5D2C334DA8002D0A71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1E454222C5695B8004B5451 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -45,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				F17B6F622C334DA8002D0A71 /* Backburner */,
+				F1E454262C5695B8004B5451 /* Fetch New Recipe */,
 				F17B6F612C334DA8002D0A71 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				F17B6F602C334DA8002D0A71 /* Backburner.app */,
+				F1E454252C5695B8004B5451 /* Fetch New Recipe.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -81,6 +121,16 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		F1E454262C5695B8004B5451 /* Fetch New Recipe */ = {
+			isa = PBXGroup;
+			children = (
+				F1E454272C5695B8004B5451 /* ShareViewController.swift */,
+				F1E454292C5695B8004B5451 /* MainInterface.storyboard */,
+				F1E4542C2C5695B8004B5451 /* Info.plist */,
+			);
+			path = "Fetch New Recipe";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -91,15 +141,34 @@
 				F17B6F5C2C334DA8002D0A71 /* Sources */,
 				F17B6F5D2C334DA8002D0A71 /* Frameworks */,
 				F17B6F5E2C334DA8002D0A71 /* Resources */,
+				F1E454302C5695B8004B5451 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F1E4542E2C5695B8004B5451 /* PBXTargetDependency */,
 			);
 			name = Backburner;
 			productName = Backburner;
 			productReference = F17B6F602C334DA8002D0A71 /* Backburner.app */;
 			productType = "com.apple.product-type.application";
+		};
+		F1E454242C5695B8004B5451 /* Fetch New Recipe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F1E454332C5695B8004B5451 /* Build configuration list for PBXNativeTarget "Fetch New Recipe" */;
+			buildPhases = (
+				F1E454212C5695B8004B5451 /* Sources */,
+				F1E454222C5695B8004B5451 /* Frameworks */,
+				F1E454232C5695B8004B5451 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Fetch New Recipe";
+			productName = "Fetch New Recipe";
+			productReference = F1E454252C5695B8004B5451 /* Fetch New Recipe.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -108,11 +177,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					F17B6F5F2C334DA8002D0A71 = {
 						CreatedOnToolsVersion = 14.3.1;
+					};
+					F1E454242C5695B8004B5451 = {
+						CreatedOnToolsVersion = 15.4;
 					};
 				};
 			};
@@ -130,6 +202,7 @@
 			projectRoot = "";
 			targets = (
 				F17B6F5F2C334DA8002D0A71 /* Backburner */,
+				F1E454242C5695B8004B5451 /* Fetch New Recipe */,
 			);
 		};
 /* End PBXProject section */
@@ -141,6 +214,14 @@
 			files = (
 				F17B6F6C2C334DAA002D0A71 /* Preview Assets.xcassets in Resources */,
 				F17B6F682C334DAA002D0A71 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F1E454232C5695B8004B5451 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1E4542B2C5695B8004B5451 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,7 +241,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F1E454212C5695B8004B5451 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1E454282C5695B8004B5451 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F1E4542E2C5695B8004B5451 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F1E454242C5695B8004B5451 /* Fetch New Recipe */;
+			targetProxy = F1E4542D2C5695B8004B5451 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F1E454292C5695B8004B5451 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1E4542A2C5695B8004B5451 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		F17B6F6D2C334DAA002D0A71 /* Debug */ = {
@@ -279,6 +387,7 @@
 		F17B6F702C334DAA002D0A71 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Backburner/Backburner.entitlements;
@@ -307,7 +416,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mikavohl.Backburner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -317,6 +427,7 @@
 		F17B6F712C334DAA002D0A71 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Backburner/Backburner.entitlements;
@@ -345,10 +456,73 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mikavohl.Backburner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F1E454312C5695B8004B5451 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U7PP36WG8W;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Fetch New Recipe/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Fetch New Recipe";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikavohl.Backburner.Fetch-New-Recipe";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F1E454322C5695B8004B5451 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U7PP36WG8W;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Fetch New Recipe/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Fetch New Recipe";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.mikavohl.Backburner.Fetch-New-Recipe";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -369,6 +543,15 @@
 			buildConfigurations = (
 				F17B6F702C334DAA002D0A71 /* Debug */,
 				F17B6F712C334DAA002D0A71 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F1E454332C5695B8004B5451 /* Build configuration list for PBXNativeTarget "Fetch New Recipe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1E454312C5695B8004B5451 /* Debug */,
+				F1E454322C5695B8004B5451 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
